@@ -1,7 +1,7 @@
-% Copyright 2003 by Till Tantau <tantau@users.sourceforge.net>
-%
-% This program can be redistributed and/or modified under the terms
-% of the GNU Public License, version 2.
+% Antonio Gomez (agomez@tacc.utexas.edu)
+% 4-20-17. Added option to put the footer on the right side
+
+
 
 \mode<presentation>
 
@@ -10,7 +10,18 @@
 \usepackage{etoolbox}
 
 \pgfdeclareimage[width=\paperwidth]{titlebackground}{./figures/master.jpg}
-\pgfdeclareimage[width=\paperwidth]{background}{./figures/secondary.jpg}
+
+% This theme accepts the "rightfooter" option
+% When used, it will put the TACC logo at the bottom of the slide on the right side
+% By default, it goes to the left
+
+\if@rightfooterOption
+	\pgfdeclareimage[width=\paperwidth]{background}{./figures/secondary_right.jpg}
+\else
+	\pgfdeclareimage[width=\paperwidth]{background}{./figures/secondary.jpg}
+\fi
+
+
 
 \setbeamertemplate{background canvas}{%
     \ifnum\c@framenumber=1%
@@ -86,30 +97,35 @@
 
   \hbox{%
   \ifnum \thepage>1
-    % On the left half of the footer, insert the TACC of
-    \begin{minipage}{.2\textwidth}%
-      \hskip .05\textwidth%Give horizontal space else this will set on the left edge of the slide!
-     % \includegraphics[width=.8\textwidth]{figures/TACC_logo.png}
-    \end{minipage}
+    \if@rightfooterOption
+    	\begin{minipage}{.2\textwidth}%
+      		\hskip .05\textwidth%Give horizontal space else this will set on the left edge of the slide!
+    	\end{minipage}
+    \else
+    	\begin{minipage}{.4\textwidth}%
+      		\hskip .05\textwidth%Give horizontal space else this will set on the left edge of the slide!
+    	\end{minipage}
+    \fi
     
  
     \begin{minipage}{\textwidth}%
      % \vskip .023\textheight%
       \raggedleft%
       \setlength{\rightskip}{\textwidth}
-      \hbox{%
-      	\begin{beamercolorbox}[wd=0.7\textwidth,ht=2.25ex,dp=1ex,left]{author in head/foot}%
-	         \insertshorttitle{} \hskip .01\textwidth | \hskip .01\textwidth \insertdate{} \hskip .01\textwidth  | \hskip .01\textwidth  \insertframenumber{}
-  			\end{beamercolorbox}%
+		\if@rightfooterOption
+      		\hbox{%
+      			\begin{beamercolorbox}[wd=0.7\textwidth,ht=2.25ex,dp=1ex,left]{author in head/foot}%
+	         		\insertshorttitle{} \hskip .01\textwidth | \hskip .01\textwidth \insertdate{} \hskip .01\textwidth  | \hskip .01\textwidth  \insertframenumber{}
+  				\end{beamercolorbox}%
 			}
+		\else
+			\hbox{%
+      			\begin{beamercolorbox}[wd=0.5\textwidth,ht=2.25ex,dp=1ex,left]{author in head/foot}%
+	         		\insertshorttitle{} \hskip .01\textwidth | \hskip .01\textwidth \insertdate{} \hskip .01\textwidth  | \hskip .01\textwidth  \insertframenumber{}
+  				\end{beamercolorbox}%
+			}
+		\fi
 		
-      %
-      % If we are not on the first page, insert a page number
-      % For some reason, insertframenumber is buggy when you have fragile
-      % slides with verbatim environments in them... it tends to skip numbers
-      % for some reason!  On the other hand, the pagenumber is incremented
-      % for *every* slide, including transition slides...
-        %   \hfill\includegraphics[width=\textwidth]{figures/tacc_ut.png}
     \end{minipage}%
     \begin{minipage}{.05\textwidth}%
     \end{minipage}%

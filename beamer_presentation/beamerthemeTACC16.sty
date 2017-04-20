@@ -1,11 +1,20 @@
 %% TACC theme for beamer
 
+
+\newif\if@rightfooterOption
+\@rightfooterOptionfalse
+\DeclareOption{rightfooter}{\@rightfooterOptiontrue}
+\ProcessOptions
+
+
 \newif\ifTACCheadernav
 \DeclareOption{headernav}{\global\TACCheadernavtrue}
 
 \newif\ifTACCheadertree
 \DeclareOption{headertree}{\global\TACCheadertreetrue}
 \ProcessOptions
+
+
 
 \mode<presentation>
 
