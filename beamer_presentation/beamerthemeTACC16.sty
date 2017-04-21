@@ -26,7 +26,7 @@
  {
   % Recover the option from those passed to the class
   \keys_set:nf { zunbeltz/beameroptions } { \use:c { opt@beamer.cls } }
-  \str_case:Vnn \l_zunbeltz_aspectratio_tl { #1 } { #2 }
+  \str_case:VnF \l_zunbeltz_aspectratio_tl { #1 } { #2 }
  }
 % We need to define only one key, the other are treated as `unknown'
 \keys_define:nn { zunbeltz/beameroptions }
@@ -39,7 +39,7 @@
 % Generate the variants we need
 \cs_generate_variant:Nn \keys_set:nn { nf }
 \cs_generate_variant:Nn \str_if_eq:nnTF { nV }
-\cs_generate_variant:Nn \str_case:nnn { V }
+\cs_generate_variant:Nn \str_case:nnF { V }
 \ExplSyntaxOff
 
 \mode<presentation>
